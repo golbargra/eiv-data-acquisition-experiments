@@ -1,7 +1,0 @@
-Data/
-data/
-*.csv
-!experiment_results.csv
-!pivot_mse.csv
-__pycache__/
-.ipynb_checkpoints/
