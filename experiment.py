@@ -253,4 +253,4 @@ pivot_mse = results_df.pivot_table(
 pivot_mse.to_csv("pivot_mse.csv")
 
 print("\nExperiment finished.")
-print(results_df.head(250))
+print(results_df.head(300))
