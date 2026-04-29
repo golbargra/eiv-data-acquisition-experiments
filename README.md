@@ -12,4 +12,3 @@ We vary:
 - labeled sample size (n)
 - unlabeled sample size (m)
 
-Dataset is not included due to size.
