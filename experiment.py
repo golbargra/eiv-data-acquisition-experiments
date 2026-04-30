@@ -4,8 +4,8 @@ import matplotlib.pyplot as plt
 
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
-from sklearn.linear_model import LinearRegression, LogisticRegression
-from sklearn.metrics import mean_squared_error, roc_auc_score, average_precision_score
+from sklearn.linear_model import LinearRegression
+from sklearn.metrics import mean_squared_error
 
 
 # =========================
@@ -60,14 +60,19 @@ def add_noise(X, features, noise_level, seed=42):
     return X_noisy
 
 
+#This function splits training data into a labeled set of size n and an unlabeled set of size m in a controlled way.
+# It first separates indices of fraud and non-fraud samples,
+# then constructs the labeled set by sampling approximately the same class proportion as the original data while forcing at least one fraud case so the model can train properly.
+# After selecting these labeled indices, it removes them from the pool and randomly samples the remaining points to form the unlabeled set.
+# Finally, it shuffles both sets and returns their indices, ensuring a valid, non-overlapping split between labeled and unlabeled data for your experiment.
 def sample_labeled_unlabeled_indices(y_train, n, m, seed=123):
     rng = np.random.default_rng(seed)
 
     fraud_idx = y_train[y_train == 1].index.to_numpy()
-    nonfraud_idx = y_train[y_train == 0].index.to_numpy()
+    nonfraud_idx = y_train[y_train == 0].index.to_numpy()#so we know where fraud cases are
 
     fraud_rate = y_train.mean()
-    n_fraud = max(1, int(round(n * fraud_rate)))
+    n_fraud = max(1, int(round(n * fraud_rate))) #keeps class imbalance realistic, but ensures at least one fraud
     n_fraud = min(n_fraud, len(fraud_idx))
 
     n_nonfraud = n - n_fraud
@@ -88,6 +93,8 @@ def sample_labeled_unlabeled_indices(y_train, n, m, seed=123):
     return labeled_idx, unlabeled_idx
 
 
+#It first combines both labeled and unlabeled data to learn a mapping from noisy features to clean features by fitting a linear regression model (the “denoiser”)
+#Then, it applies this learned mapping to any given noisy dataset (X_noisy_target) to produce a denoised version of those features.
 def two_stage_denoise(
     X_noisy_labeled,
     X_clean_labeled,
@@ -110,21 +117,15 @@ def two_stage_denoise(
     ), denoiser
 
 
+#evaluation: The model is set up with class weighting to handle the strong class imbalance in fraud data. After fitting, it outputs predicted probabilities for the positive class (fraud) on the test set, and computes three evaluation metrics
 def train_and_eval(X_tr, y_tr, X_te, y_te):
-    model = LogisticRegression(
-        max_iter=3000,
-        class_weight="balanced",
-        solver="lbfgs"
-    )
-
+    model = LinearRegression()
     model.fit(X_tr, y_tr)
 
-    prob = model.predict_proba(X_te)[:, 1]
+    y_pred = model.predict(X_te)
 
     return {
-        "mse": mean_squared_error(y_te, prob),
-        "auc": roc_auc_score(y_te, prob),
-        "auprc": average_precision_score(y_te, prob)
+        "mse": mean_squared_error(y_te, y_pred)
     }
 
 
