@@ -255,3 +255,39 @@ pivot_mse.to_csv("pivot_mse.csv")
 
 print("\nExperiment finished.")
 print(results_df.head(300))
+
+import matplotlib.pyplot as plt
+
+models = results_df["model"].unique()
+noise_levels = sorted(results_df["noise"].unique())
+
+for noise in noise_levels:
+    print(f"Plotting noise = {noise}")
+
+    df_noise = results_df[results_df["noise"] == noise]
+
+    # one figure per noise
+    plt.figure(figsize=(12, 4))
+
+    for i, model in enumerate(models):
+        plt.subplot(1, len(models), i+1)
+
+        df_model = df_noise[df_noise["model"] == model]
+
+        # plot one line per n
+        for n in sorted(df_model["n"].unique()):
+            temp = df_model[df_model["n"] == n].sort_values("m")
+
+            plt.plot(temp["m"], temp["mse"], marker='o', label=f"n={n}")
+
+        plt.title(f"{model} (noise={noise})")
+        plt.xlabel("m")
+        plt.ylabel("MSE")
+        plt.grid()
+
+        if i == 0:
+            plt.legend()
+
+    plt.tight_layout()
+    plt.savefig(f"plot_noise_{noise}.png", dpi=300, bbox_inches="tight")
+    plt.close()
