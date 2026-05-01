@@ -112,7 +112,6 @@ print(df.head())
 print("\nMissing values:")
 print(df.isna().sum().sort_values(ascending=False).head(20))
 
-print("\nBasic statistics:")
+print("\nBasic statisticss:")
 print(df.describe().T.head(30))
 
-print("\nSaved as: real_estate_clean_merged.csv")
