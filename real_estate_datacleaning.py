@@ -5,14 +5,14 @@ import pandas as pd
 # 1. Load datasets
 # =========================
 
-pre = pd.read_csv("pre_owned_house_transactions.csv")
-pre_near = pd.read_csv("pre_owned_house_transactions_nearby_sectors.csv")
+pre = pd.read_csv("Data/pre_owned_house_transactions.csv")
+pre_near = pd.read_csv("Data/pre_owned_house_transactions_nearby_sectors.csv")
 
-new = pd.read_csv("new_house_transactions.csv")
-new_near = pd.read_csv("new_house_transactions_nearby_sectors.csv")
+new = pd.read_csv("Data/new_house_transactions.csv")
+new_near = pd.read_csv("Data/new_house_transactions_nearby_sectors.csv")
 
-land = pd.read_csv("land_transactions.csv")
-land_near = pd.read_csv("land_transactions_nearby_sectors.csv")
+land = pd.read_csv("Data/land_transactions.csv")
+land_near = pd.read_csv("Data/land_transactions_nearby_sectors.csv")
 
 poi = pd.read_csv("sector_POI.csv")
 
@@ -112,6 +112,6 @@ print(df.head())
 print("\nMissing values:")
 print(df.isna().sum().sort_values(ascending=False).head(20))
 
-print("\nBasic statisticss:")
+print("\nBasic statistics:")
 print(df.describe().T.head(30))
 
