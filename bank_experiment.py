@@ -12,7 +12,7 @@ from sklearn.metrics import mean_squared_error
 # 1. Load cleaned data
 # =========================
 
-DATA_PATH = "bank_cleaned.csv"
+DATA_PATH = "Data/bank_cleaned.csv"
 data = pd.read_csv(DATA_PATH)
 
 y = data["y"]
