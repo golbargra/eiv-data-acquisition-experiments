@@ -352,6 +352,6 @@ for ax, (col, title, cmap_name) in zip(axes, [
 plt.tight_layout()
 plt.savefig("plot_heatmap.png", dpi=150, bbox_inches="tight")
 plt.close()
-print("Saved plot_heatmap.png")
+print("Saved_plot_heatmap.png")
 
 print("\nDone.")

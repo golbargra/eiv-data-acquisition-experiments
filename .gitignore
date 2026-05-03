@@ -6,3 +6,9 @@ data/
 __pycache__/
 .ipynb_checkpoints/
 .aider*
+*.png
+*.zip
+.DS_Store
+.idea/shelf/
+real_estate_clean_merged.csv
+eiv_mse_bound_experiment.py
