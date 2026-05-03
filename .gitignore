@@ -5,6 +5,9 @@ data/
 !plot_noise_*.png
 !plot_fitted_bound.png
 !plot_heatmap.png
+!simple_mse_vs_noise.png
+!simple_mse_vs_m.png
+!simple_w_recovery.png
 *.zip
 .DS_Store
 __pycache__/
