@@ -2,6 +2,9 @@ Data/
 data/
 *.csv
 *.png
+!plot_noise_*.png
+!plot_fitted_bound.png
+!plot_heatmap.png
 *.zip
 .DS_Store
 __pycache__/
